@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
 import java.net.NetworkInterface;
+import java.util.UUID;
 
 public class DeviceUUID {
 
@@ -33,20 +34,20 @@ public class DeviceUUID {
         SharedPreferences sp = context.getSharedPreferences(context.getPackageName() + "_uuid", Context.MODE_PRIVATE);
         String _uuid = sp.getString("uuid", null);
         if (_uuid == null) {
-            java.util.UUID uuid;
+            UUID uuid;
             String imei = getImei(context);
             if (imei != null && imei.length() > 0) {
-                uuid = java.util.UUID.nameUUIDFromBytes(imei.getBytes());
+                uuid = UUID.nameUUIDFromBytes(imei.getBytes());
             } else {
                 String mac = getWifiMacAddress();
                 if (mac != null && mac.length() > 0) {
-                    uuid = java.util.UUID.nameUUIDFromBytes(mac.getBytes());
+                    uuid = UUID.nameUUIDFromBytes(mac.getBytes());
                 } else {
                     String androidId = getAndroidId(context);
                     if (androidId != null && !"9774d56d682e549c".equals(androidId)) {
-                        uuid = java.util.UUID.nameUUIDFromBytes(androidId.getBytes());
+                        uuid = UUID.nameUUIDFromBytes(androidId.getBytes());
                     } else {
-                        uuid = java.util.UUID.randomUUID();
+                        uuid = UUID.randomUUID();
                     }
                 }
             }
